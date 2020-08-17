@@ -32,7 +32,8 @@
                 <tr id="tableRow">
                     <td>
                         <select class='selUser' style='width: 200px;'>
-                            <option value='0'>-- Select user --</option>
+                            {{-- <option value='0'>-- Select user --</option> --}}
+                            <option value='1'>-- Amoq --</option>
                         </select>
                     </td>
                     <td><input id="p" type="text" /></td>

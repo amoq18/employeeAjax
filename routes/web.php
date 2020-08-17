@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
 
-Route::get('/','EmployeesController@index')->name('employees.getEmployees');
-Route::post('/employees/getEmployees/','EmployeesController@getEmployees')->name('employees.getEmployees');
+Route::get('/', 'ProductsController@index');
+Route::post('/', 'ProductsController@getProducts')->name('getProducts');
+// Route::get('/','ProductsController@index')->name('employees.getEmployees');
+// Route::post('/employees/getEmployees/','EmployeesController@getEmployees')->name('employees.getEmployees');
