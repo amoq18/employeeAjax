@@ -15,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'ProductsController@index');
 Route::post('/', 'ProductsController@getProducts')->name('getProducts');
+
+Route::get('/users', 'AjaxController@index');
+Route::get('/getData/{id}','AjaxController@getData');
 // Route::get('/','ProductsController@index')->name('employees.getEmployees');
 // Route::post('/employees/getEmployees/','EmployeesController@getEmployees')->name('employees.getEmployees');

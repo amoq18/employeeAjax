@@ -20,7 +20,7 @@ class ProductSeed extends Seeder
             'quantite'=> 0,
             'montant'=> 0
         ]);
-        }
+    }
 
     }
 }
