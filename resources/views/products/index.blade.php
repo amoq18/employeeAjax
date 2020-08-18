@@ -54,6 +54,12 @@
     <!-- Script -->
     <script type="text/javascript">
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
     $(function(){
         $("#table-data").on('click', 'input.addButton', function() {
             var $tr = $(this).closest('tr');
@@ -89,31 +95,23 @@
 
         $(document).ready(function () {
             // Gestion de gestion du select2
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $(document).ready(function(){
-                $( ".selUser" ).select2({
-                    ajax: {
-                    url: "{{ route('getProducts') }}",
-                    type: "post",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                        _token: CSRF_TOKEN,
-                        search: params.term // search term
-                        };
-                    },
-                    processResults: function (response) {
-                        return {
-                        results: response
-                        };
-                    },
-                    cache: true
-                    }
-                });
 
-
-            });
+                $.ajax({
+					url: "{{ route('getProducts') }}",
+					method: 'GET'
+				})
+				.done(function(data){
+                    console.log(data);
+					data.forEach(function(prod){
+						$(".selUser").append('<option value="'+ prod +'">'+ prod +'</option>')
+					})
+					
+				})
+				.fail(function(error){
+					console.log(error)
+				})
+                   
         });
     });
     </script>
