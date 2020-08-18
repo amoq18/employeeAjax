@@ -93,11 +93,27 @@
             $tr.closest('table').append($clone);
         });
             // Gestion de gestion du select2
+          /*  $(document).ready(function(){
+        $("#submit").click(function(){
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost/page1.html",
+            success:function(data){
+             alert(data);
+            }
+        });
+    return false;
+    });
+});*/
+
             $(document).ready(function(){
                 $("#add").click(function(){
                 $.ajax({
 					url: "{{ route('getProducts') }}",
-					method: 'GET'
+					type: 'GET',
+                    success:function(data){
+                alert(data);
+                }
 				})
 				.done(function(data){
                     console.log(data);
