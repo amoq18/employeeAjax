@@ -94,7 +94,7 @@
         });
             // Gestion de gestion du select2
             $(document).ready(function(){
-
+                $("#add").click(function(){
                 $.ajax({
 					url: "{{ route('getProducts') }}",
 					method: 'GET'
