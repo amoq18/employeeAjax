@@ -109,6 +109,30 @@
                     }
                 });
             });
+
+
+
+            $( ".selUser" ).change(function(){
+                $.ajax({
+                    url: "{{ route('getProduct') }}",
+                    type: "post",
+                    data: {
+                        _token: CSRF_TOKEN,
+                        product_id: $(this).val()
+                    },
+                    dataType: 'json',
+                }).done((data) => {
+                    $(this).closest('td').next().children().val(data.description)
+                    $(this).closest('td').next().next().children().val(data.prix)
+                    $(this).closest('td').next().next().next().children().val(1)
+                    $(this).closest('td').next().next().next().next().children().val(data.prix)
+                    
+                }).fail(function(err){
+                    console.log(err)
+                })
+                
+            })
+
         });
     });
     </script>

@@ -32,5 +32,9 @@ class ProductsController extends Controller
          echo json_encode($response);
          exit;
         return 0;
-	}
+   }
+   
+   public function getProduct(){
+      return Product::findOrFail(request('product_id'));
+   }
 }
