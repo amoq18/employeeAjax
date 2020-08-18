@@ -26,10 +26,7 @@
                     <td>Prix</td>
                     <td>Quantité</td>
                     <td>Montant</td>
-                    <td>
-                        <button id="add">Ajouter</button>
-                        <!-- <input class="Sup" type="submit" value="Supprimer" /> -->
-                    </td>
+                    <td>Bouton</td>
                 </tr>
                 <tr class='input-form'>
                     <td>
@@ -111,8 +108,6 @@
                     cache: true
                     }
                 });
-
-
             });
         });
     });
