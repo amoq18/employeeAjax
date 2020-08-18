@@ -92,8 +92,6 @@
             $clone.find('input:text').val('');
             $tr.closest('table').append($clone);
         });
-
-        $(document).ready(function () {
             // Gestion de gestion du select2
             $(document).ready(function(){
 
@@ -111,7 +109,7 @@
 				.fail(function(error){
 					console.log(error)
 				})
-                   
+
         });
     });
     </script>
