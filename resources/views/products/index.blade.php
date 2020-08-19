@@ -35,12 +35,12 @@
                     {{-- <select class="select2" name="selectPdts" style="width: 200px;"">
                         <option value='0'>-- Selectionner produit --</option>
                     </select> --}}
-                    <select class="select2" name="det_brg" style="width:100%;"></select>
+                    <select class="select2" name="listPdts" style="width:100%;"></select>
                 </td>
                 <td><input name="desc" class="" value="" /></td>
                 <td><input name="prix" type="number" class="prix amount" value="" /></td>
                 <td><input name="qte" type="number" class="qte amount" value="" /></td>
-                <td><input name="total" min="0" value="0" type="number" class="total" readonly="readonly" /></td>
+                <td><input name="total" min="0" type="number" class="total" readonly="readonly" /></td>
             </tr>
         </table>
 
@@ -76,6 +76,8 @@
                     ajax: {
                         url: "{{ route('getProducts') }}",
                         type: "post",
+                        allowClear: true,
+                        placeholder :'select..',
                         dataType: 'json',
                         delay: 250,
                         data: function(params) {
@@ -101,12 +103,12 @@
                 $('#tab1').append(
                     '<tr id="row' + r + '" class="ligneTab">\
                         <td>\
-                            <select class="select2" name="det_brg" style="width:100%;"></select>\
+                            <select class="select2" name="listPdts" style="width:100%;"></select>\
                         </td>\
                         <td><input name="desc" class="" value="" /></td>\
-                        <td><input name="prix'+r+'" type="number" class="prix amount" value="" /></td>\
-                        <td><input name="qte'+r+'" type="number" class="qte amount" value="" /></td>\
-                        <td><input name="total'+r+'" min="0" value="0" type="number" class="total" readonly="readonly" /></td>\
+                        <td><input name="prix" type="number" class="prix amount" value="" /></td>\
+                        <td><input name="qte" type="number" class="qte amount" value="" /></td>\
+                        <td><input name="total" min="0" type="number" class="total" readonly="readonly" /></td>\
                         <td><button type="button" name="remove" id="' + r + '" class="btn_remove">X</button></td>\
                     </tr>'
                 );
@@ -115,6 +117,51 @@
                 // $('.total').val(0)
                 var newSelect=$("#tab1").find(".select2").last();
                 initializeSelect2(newSelect);
+
+                $(".select2").select2({
+                    ajax: {
+                        url: "{{ route('getProducts') }}",
+                        type: "post",
+                        allowClear: true,
+                        placeholder :'select..',
+                        dataType: 'json',
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                _token: CSRF_TOKEN,
+                                search: params.term // search term
+                            };
+                        },
+                        processResults: function(response) {
+                            return {
+                                results: response
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
+                // Chargement des infos du select dns les inputs
+                $( ".select2" ).change(function(){
+                    $.ajax({
+                        url: "{{ route('getProduct') }}",
+                        type: "post",
+                        data: {
+                            _token: CSRF_TOKEN,
+                            product_id: $(this).val()
+                        },
+                        dataType: 'json',
+                    }).done((data) => {
+                        $(this).closest('td').next().children().val(data.description)
+                        $(this).closest('td').next().next().children().val(data.prix)
+                        $(this).closest('td').next().next().next().children().val(data.quantite)
+                        $(this).closest('td').next().next().next().next().children().val(data.montant)
+
+                    }).fail(function(err){
+                        console.log(err)
+                    })
+
+                })
             });
 
             // remove row when X is clicked
